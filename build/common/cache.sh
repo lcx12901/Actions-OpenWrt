@@ -44,7 +44,8 @@ function github_release(){
 
 if ! [[ "$cache_repo" =~ / ]];then
     # 不包含 / ，就拼接上用户名，用于单独一个仓库存储缓存
-    cache_repo=${GITHUB_REPOSITORY%%/*}/${cache_repo}
+    echo "$cache_repo"
+    # cache_repo=${GITHUB_REPOSITORY%%/*}/${cache_repo}
 fi
 
     local action=$1
