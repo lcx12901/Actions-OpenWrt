@@ -42,10 +42,11 @@ function github_release(){
 # cache_repo 新创建仓库的话，必须有文件，否则后面操作无法上传和创建release
 : ${cache_release_name:=cache-$build_target}  {cache_repo:=$GITHUB_REPOSITORY}
 
+# 这里的判断$cache_repo 会为空
 if ! [[ "$cache_repo" =~ / ]];then
     # 不包含 / ，就拼接上用户名，用于单独一个仓库存储缓存
     echo "$cache_repo"
-    # cache_repo=${GITHUB_REPOSITORY%%/*}/${cache_repo}
+    cache_repo=${GITHUB_REPOSITORY}
 fi
 
     local action=$1
