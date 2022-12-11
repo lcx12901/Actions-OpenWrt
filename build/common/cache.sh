@@ -4,8 +4,8 @@ if [ -z "$repository_owner" ] && [ -f "$GITHUB_ENV" ];then
     source $GITHUB_ENV
 fi
 
-: ${cache_func:=dockerhub} ${Need_Avail_G_NUM:=15}
-#: ${cache_func:=github_release}
+#: ${cache_func:=dockerhub} ${Need_Avail_G_NUM:=15}
+: ${cache_func:=github_release}
 
 # cache 实现要求
 # 下载的时候，需要生成 /tmp/cache_list 存放文件，每行一个，用于上传的判断数量大于10没有
@@ -23,7 +23,7 @@ function clean_dl(){
     fi
     if [ -f dl/time ];then
         last_time=$(cat dl/time)
-        # echo 3*24*60*60 | bc # 超过上一次三天就清理一次 
+        # echo 3*24*60*60 | bc # 超过上一次三天就清理一次
         if [ $(( `date +%s` - $last_time  )) -ge $[15*24*60*60] ];then
             echo "dl 缓存清理"
             rm -rf dl
@@ -47,7 +47,7 @@ if ! [[ "$cache_repo" =~ / ]];then
     cache_repo=${GITHUB_REPOSITORY%%/*}/${cache_repo}
 fi
 
-    local action=$1 
+    local action=$1
 
 case $action in
     download)
@@ -79,7 +79,7 @@ case $action in
             echo 18
         else
             echo 20
-        fi 
+        fi
     ;;
     clean)
         pushd openwrt
@@ -120,7 +120,7 @@ esac
 
 
 function ghcr(){
-    local action=$1 
+    local action=$1
     local tag pipe file token
     local repo_user=${repository_owner}
     export repo_user
@@ -180,7 +180,7 @@ case $action in
             echo 20
         else
             echo 23
-        fi 
+        fi
     ;;
     clean)
         pushd openwrt
@@ -236,7 +236,7 @@ esac
 }
 
 function dockerhub(){
-    local action=$1 
+    local action=$1
     local tag pipe file token
     local repo_user=${repository_owner}
     export repo_user
@@ -296,7 +296,7 @@ case $action in
             echo 21
         else
             echo 23
-        fi 
+        fi
     ;;
     clean)
         pushd openwrt
